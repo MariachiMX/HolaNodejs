@@ -13,11 +13,19 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v4
 
+      - name: Clean up orphan Docker processes
+        run: |
+          docker ps -q | xargs -r docker stop
+          docker ps -a -q | xargs -r docker rm
+
+      - name: Debug Docker version
+        run: docker --version
+
       - name: Iniciar sesión en Docker Hub
         run: |
           export DOCKER_CLI_ACI=0
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          
+
       - name: Construir la imagen Docker
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/miapp:latest .
 
