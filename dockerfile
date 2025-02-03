@@ -1,5 +1,5 @@
-# Usa Ubuntu como imagen base (incluye bash)
-FROM ubuntu:latest
+# Usa Node.js como imagen base
+FROM node:18-alpine
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
